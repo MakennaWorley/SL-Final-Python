@@ -3,7 +3,7 @@
 
 **Author:** Makenna Worley  
 **Course:** Statistical Learning (Fall 2025)  
-**Dataset:** Generated data using [**make_msprime_dataset.py**](https://github.com/MakennaWorley/Capstone-Playground-Python/blob/main/README.md?plain=1) from my Capstone-Playground-Python Repo
+**Dataset:** Generated data using [**make_msprime_dataset.py**](https://github.com/MakennaWorley/Capstone-Playground-Python/blob/main/README.md?plain=1) from my Capstone-Playground-Python Repo with seed: 3195663216
 
 ---
 
@@ -63,12 +63,6 @@ project-root/
 ├── streamlit_app/
 │   ├── app.py                      # Streamlit visualization interface
 │   └── utils.py
-│
-├── figures/
-│   ├── histograms/
-│   ├── coefficient_paths/
-│   ├── model_performance/
-│   └── bootstrap/
 │
 ├── src/
 │   ├── data_loading.py
