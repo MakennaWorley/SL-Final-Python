@@ -156,22 +156,8 @@ project-root/
 │   └── msprime_effect_sizes.csv
 │
 ├── notebooks/
-|   ├── final.ipynb                 # Main Jupyter analysis notebook
-│   ├── analysis.ipynb              # Playground for modeling
+|   ├── analysis.ipynb              # Main Jupyter analysis notebook
 │   └── exploratory.ipynb           # EDA and initial exploration
-│
-├── streamlit_app/
-│   ├── app.py                      # Streamlit visualization interface
-│   └── utils.py
-│
-├── src/
-│   ├── data_loading.py
-│   ├── models_linear.py
-│   ├── models_shrinkage.py
-│   ├── subset_selection.py
-│   ├── evaluation.py
-│   ├── pca_analysis.py
-│   └── plotting.py
 │
 └── README.md
 ```
