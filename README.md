@@ -159,6 +159,7 @@ project-root/
 |   ├── analysis.ipynb              # Main Jupyter analysis notebook
 │   └── exploratory.ipynb           # EDA and initial exploration
 │
+│
 └── README.md
 ```
 
@@ -233,7 +234,7 @@ cd <repo-name>
 #### 2️⃣ **Create and activate the environment**
 ```bash
 conda env create -f environment.yml
-conda activate data370_final
+conda activate data370
 ```
 
 #### 3️⃣ **Run the analysis notebook**
@@ -241,12 +242,6 @@ Open:
 
 ```
 notebooks/analysis.ipynb
-```
-
-#### 4️⃣ **(Optional) Launch the Streamlit visualization**
-```bash
-cd streamlit_app
-streamlit run app.py
 ```
 
 This provides an interactive comparison of model performance.
