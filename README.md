@@ -184,4 +184,6 @@ cd streamlit
 streamlit run app.py
 ```
 
+Or go to [Streamlit.io](https://makennaworley-sl-final-python-streamlitapp-7hj55p.streamlit.app/)
+
 This provides an interactive comparison of model performance.
