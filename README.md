@@ -3,8 +3,8 @@
 
 **Author:** Makenna Worley  
 **Course:** Statistical Learning (Fall 2025)  
-**Dataset:** Generated using `make_msprime_dataset.py` with seed 3195663216  
-**Tools:** Python, scikit-learn, pandas, matplotlib, seaborn  
+**Dataset:** Generated using `make_msprime_dataset.py` with seed 3195663216 
+**Tools:** Python, scikit-learn, pandas, matplotlib, seaborn
 
 ---
 
@@ -13,10 +13,12 @@
 This project uses a fully simulated genetic dataset generated via **msprime** to evaluate both **classification** and **regression** methods within a controlled, biologically realistic setting.
 
 ### ✔ Classification
-**Classification task** using the binary variable `disease_status`. This task demonstrates familiarity with statistical learning classification methods (logistic regression, LDA, QDA, KNN, SVM), but the disease phenotype is intentionally noisy in the simulation, so the regression task is the scientifically meaningful component.
+
+The **classification task** uses the binary variable `disease_status`. This task demonstrates familiarity with statistical learning classification methods (Logistic Regression, LDA, QDA, KNN, SVM), but the disease phenotype in the simulation is intentionally noisy, making the regression task the scientifically meaningful component.
 
 ### ✔ Regression
-**Linear models, subset selection methods, and shrinkage techniques** (ridge, lasso, elastic net) recover the **true genetic architecture** of a simulated polygenic `quant_trait`. Because the dataset includes the *true causal effect sizes*, this analysis enables direct comparison between estimated and real underlying model coefficients.
+
+**Linear models, subset selection methods, and shrinkage techniques** (ridge, lasso, elastic net) are used to recover the **true genetic architecture** of a simulated polygenic `quant_trait`. Because the dataset includes the *true causal effect sizes*, this analysis enables a direct comparison between estimated and real underlying model coefficients.
 
 ---
 
@@ -25,69 +27,78 @@ This project uses a fully simulated genetic dataset generated via **msprime** to
 The simulation generates two CSV files:
 
 ### **Cohort-level data**
-- `quant_trait` — continuous quantitative phenotype  
-- `polygenic_score` — aggregate genetic risk score  
-- `env_index` — environmental exposure  
-- `sex` — binary categorical  
-- `age` — numerical  
-- `disease_status` — binary response for classification  
-- `PC1`, `PC2` — simulated population structure (neutral)  
+* `quant_trait` — continuous quantitative phenotype
+* `polygenic_score` — standardized polygenic risk for the trait
+* `disease_status` — binary outcome (0/1)
+* `age`, `sex`, `env_index` — demographic and environmental covariates
+* `PC1`, `PC2` — principal components capturing population structure
 
-### **Variant-level data**
-- `beta` — true SNP effect sizes  
-- `is_causal` — indicator for causal variants  
-- Only ~5% of variants are causal  
+---
 
-This structure allows evaluation of:
-- Prediction accuracy  
-- Coefficient recovery vs true β  
-- Effect of population structure  
-- Bias/variance performance under shrinkage  
+## 🔑 **Key Findings**
+
+### 🦠 **Classification (Predicting Disease Status)**
+
+The most robust classification model was **Logistic Regression**, which achieved the highest balance of predictive power and stability.
+
+* **Top Performance (AUC):** The **Logistic Regression model** achieved the highest **AUC ($\approx 0.758$)** and **Average Precision ($\approx 0.751$)** on the test set.
+* **Accuracy:** The best model's overall accuracy was **$\approx 68.7\%$**.
+* **Overfitting:** Unlike the Linear Regression, several non-linear models (KNN, Decision Tree, Random Forest) showed signs of **significant overfitting**.
+* **Feature Importance (Classification):** The **Polygenic Score** remained the single most important predictor across all stable classification models.
+
+### 🎯 **Regression (Predicting Quantitative Trait)**
+
+The most robust and predictive regression model was **Linear Regression using Full Features + PCA** ($R^2 \approx 0.567$).
+
+* **Optimal Performance** The highest predictive power achieved by any model was an **$R^2 \approx 0.567$** on the test set, with a low $\text{RMSE} \approx 0.644$.
+* **Best Model:** The **Linear Regression (LR) Full + PCA model** was selected as the top model due to its high accuracy, robust stability, and its use of orthogonal (uncorrelated) principal components as predictors.
+* **Feature Importance:** The most significant predictors for the `quant_trait` were the **Polygenic Score** (coefficient $\approx 0.657$) and the **Environmental Index** (coefficient $\approx 0.353$).
+* **Shrinkage Models:** Ridge, Lasso, and ElasticNet models converged on a final model with nearly the **exact same performance** as the standard Linear Regression, indicating that the original OLS model was already well-conditioned.
+* **Model Validation:** All top linear and shrinkage models showed **low error and strong stability**, successfully meeting the assumptions of randomly scattered, normally distributed errors.
+* **Poor Performers:** Regression Tree models were **disqualified due to severe overfitting** (Test $R^2$ in the $0.35$ to $0.39$ range), confirming the underlying relationship between predictors and the Quantitative Trait is fundamentally **linear**.
+
+---
+
+## 🧪 **Evaluation Metrics**
+
+### For classification performance:
+
+* **Test Accuracy**
+* **Test AUC** (Area Under the ROC Curve - primary metric)
+* **Test Average Precision**
+
+### For regression performance:
+
+* **Test $\text{RMSE}$**
+* **Test $R^2$**
+* **Overfitting Gap** (Difference between Train $R^2$ and Test $R^2$)
 
 ---
 
 ## 🎯 Research Questions
 
 ### **Classification**
-> **How accurately can disease status be predicted from polygenic and environmental predictors?**
+> **How accurately can disease status be predicted from the features?**
 
-This task demonstrates:
-- Logistic regression  
-- LDA / QDA  
-- KNN  
-- SVM  
-- ROC curves, AUC, confusion matrix  
+#### **Classification Models**
+- Logistic Regression  
+- Linear Discriminant Analysis (LDA)  
+- Quadratic Discriminant Analysis (QDA)  
+- KNN (k = 11)  
+- SVM with RBF kernel 
+
+#### **Classification Evaluation Metrics**
+- Accuracy
+- ROC curves
+- AUC
+- Confusion matrix  
 
 The classification model is less meaningful biologically due to the high stochasticity in the binary disease simulation.
 
 ### **Regression**
 > **How well do linear, subset-selection, and shrinkage models recover the true genetic architecture of a simulated polygenic quantitative trait?**
 
-Sub-questions:
-1. How much variance is explained by PRS vs environmental factors?  
-2. Which model yields the best predictive performance (RMSE, R²)?  
-3. Do shrinkage methods improve coefficient stability?  
-4. How closely do estimated coefficients match the true simulation parameters?  
-5. Do PCs from neutral structure influence prediction?
-
----
-
-## 📊 Methods
-
-### **Classification Models**
-- Logistic Regression  
-- Linear Discriminant Analysis (LDA)  
-- Quadratic Discriminant Analysis (QDA)  
-- KNN (k = 11)  
-- SVM with RBF kernel  
-
-All classification models are evaluated using:
-- Accuracy  
-- ROC AUC  
-- Confusion Matrix  
-- ROC Curves  
-
-### **Regression Models**
+#### **Regression Models**
 - Simple Linear Regression (`quant_trait ~ PRS`)
 - Multiple Linear Regression (`PRS + sex + age + env_index`)
 - Linear Regression with PCs (`+ PC1 + PC2`)
@@ -97,17 +108,7 @@ All classification models are evaluated using:
 - **Elastic Net**
 - **Bootstrap Coefficient Intervals (n=500)**
 
----
-
-## 🧪 Evaluation Metrics
-
-### **Classification**
-- Accuracy  
-- AUC  
-- ROC curve  
-- Confusion matrix  
-
-### **Regression**
+#### **Regression Evaluation Metrics**
 - RMSE (train/test)  
 - R² (train/test)  
 - Cross-validation RMSE  
@@ -115,34 +116,12 @@ All classification models are evaluated using:
 - Comparison to true β values  
 - Shrinkage paths
 
----
-
-## 📈 Key Results
-
-### Classification
-Best models:
-- Logistic Regression: accuracy = **0.686**, AUC = **0.758**
-- LDA: accuracy = **0.686**, AUC = **0.758**
-
-Moderate performance due to:
-- Noisy disease simulation  
-- Weak environmental effect  
-- Bernoulli sampling randomness  
-
-KNN performs worst; SVM is decent but doesn’t beat linear methods.
-
-### Regression
-- Full linear model achieves **RMSE ≈ 0.644** and **R² ≈ 0.566**
-- Subset selection consistently chooses:  
-  `['polygenic_score', 'env_index', 'sex']`
-- Shrinkage models yield nearly identical performance  
-- Coefficients align with true architecture hierarchy:
-  - PRS (strongest)
-  - Environment (moderate)
-  - Sex (small)
-  - Age (very small)
-- Bootstrap confirms stability of PRS and env effects  
-- PCs do **not** improve prediction (expected due to neutral simulation)
+### **Sub-questions:**
+1. How much variance is explained by PRS vs environmental factors?  
+2. Which model yields the best predictive performance (RMSE, R²)?  
+3. Do shrinkage methods improve coefficient stability?  
+4. How closely do estimated coefficients match the true simulation parameters?  
+5. Do PCs from neutral structure influence prediction?
 
 ---
 
@@ -166,62 +145,6 @@ project-root/
 │
 └── README.md
 ```
-
----
-
-## 📊 **Methods & Models Used**
-
-### **Baseline Linear Models**
-- Simple Linear Regression (`quant_trait ~ PRS`)
-- Multiple Linear Regression (`PRS + sex + age + env_index`)
-- Linear Model with Population Structure (`+ PC1 + PC2`)
-
-### **Subset Selection**
-- Forward stepwise
-- Backward stepwise
-- Best subset (if available)
-
-### **Shrinkage / Regularization**
-- Ridge Regression
-- Lasso
-- Elastic Net  
-(using cross-validation to choose penalties)
-
-### **Statistical Tools**
-- Cross-validation  
-- Bootstrap coefficient intervals  
-- PCA (for optional population structure)
-
----
-
-## 🧪 **Evaluation Metrics**
-
-### For prediction performance:
-- **Test RMSE**
-- **Test R²**
-- **Cross-validation RMSE**
-
-### For coefficient analysis:
-- Shrinkage coefficient paths  
-- Coefficient stability across bootstrap samples  
-- Correlation with **true** betas  
-- MSE between estimated β and true β  
-
----
-
-## 📈 **Figures & Visualizations**
-
-The project generates:
-
-- Histogram of the quantitative trait  
-- Trait vs PRS scatterplots  
-- PCA scree plot + PC1/PC2 ancestry plot  
-- Shrinkage coefficient paths for ridge/lasso  
-- Bootstrap coefficient distributions  
-- Bar charts of model RMSE / R² comparison  
-- True vs estimated effect size plots  
-
-All figures are saved under the `figures/` directory.
 
 ---
 
