@@ -160,6 +160,19 @@ project-root/
 |   ├── analysis.ipynb              # Playground for my analysis
 │   └── exploratory.ipynb           # EDA and initial exploration
 │
+├── streamlit/
+│   ├── app.py                      # Streamlit visualization interface
+│   └── utils.py
+│
+├── src/
+│   ├── data_loading.py
+│   ├── models_linear.py
+│   ├── models_shrinkage.py
+│   ├── subset_selection.py
+│   ├── evaluation.py
+│   ├── pca_analysis.py
+│   └── plotting.py
+│
 └── README.md
 ```
 
@@ -242,6 +255,18 @@ Open:
 
 ```
 notebooks/final.ipynb
+```
+
+#### 4️⃣ **(Optional) Launch the Streamlit visualization**
+```bash
+cd streamlit
+streamlit run app.py
+```
+
+#### 4️⃣ **(Optional) Launch the Streamlit visualization**
+```bash
+cd streamlit
+streamlit run app.py
 ```
 
 This provides an interactive comparison of model performance.
