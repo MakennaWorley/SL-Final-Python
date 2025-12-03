@@ -141,7 +141,8 @@ project-root/
 │   └── exploratory.ipynb           # EDA and initial exploration
 │
 ├── streamlit/
-│   └── utils.py                    # Streamlit visualization interface
+│   ├── app.py                      # Streamlit visualization interface
+│   └── requirements.txt            # Requirements for the Streamlit
 │
 └── README.md
 ```

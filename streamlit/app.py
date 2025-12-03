@@ -24,7 +24,7 @@ from sklearn.metrics import (
 from statsmodels.stats.outliers_influence import variance_inflation_factor
 
 # --- Configuration ---
-COHORT_FILE = "../data/3195663216_msprime_sim_cohort.csv"
+COHORT_FILE = "https://raw.githubusercontent.com/MakennaWorley/SL-Final-Python/main/data/3195663216_msprime_sim_cohort.csv"
 SEED = 42
 
 
