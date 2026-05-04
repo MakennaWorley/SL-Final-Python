@@ -3,7 +3,7 @@
 
 **Author:** Makenna Worley  
 **Course:** Statistical Learning (Fall 2025)  
-**Dataset:** Generated using `make_msprime_dataset.py` with seed 3195663216 
+**Dataset:** Generated using `make_msprime_dataset.py` with seed 3195663216  
 **Tools:** Python, scikit-learn, pandas, matplotlib, seaborn
 
 ---
